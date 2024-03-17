@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAC Board</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end; /* Align content to the right */
+            align-items: center;
+            position: fixed; /* Position fixed for overlay effect */
+            top: 0;
+            right: 0;
+            width: 500px; /* Width of the sidebar */
+            background-color: #000000; /* Background color of the sidebar */
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px /* Add margin for separation from the header */
+        }
+        .button {
+            flex-basis: calc(25% - 20px); /* 4 buttons in a row with 20px margin */
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; /* Added to allow flex layout */
+            flex-direction: column; /* Arrange content vertically */
+            align-items: center; /* Center align items */
+            text-align: center; /* Center align text */
+            width: 100px; /* Square width */
+            height: 100px; /* Square height */
+        }
+        #selected-word {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #long-text {
+            width: 100%;
+        }
+        .button img {
+            width: 48px; /* Adjust image width */
+            height: 48px; /* Adjust image height */
+            margin-bottom: 5px; /* Add space between image and text */
+            align-self: center; 
+        }
+        .button span {
+            margin-top: 5px; /* Add space between image and text */
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px; /* Add margin for separation from the text area */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AAC Board</h1>
+        <div class="button-container">
+            <button class="button" onclick="selectWord('Hello')"><img src="images/hello.png" alt="Icon 1">Hello</button>
+            <button class="button" onclick="selectWord('Goodbye')"><img src="images/bye.png" alt="Icon 1">Goodbye</button>
+            <button class="button" onclick="selectWord('Agenda')"><img src="images/agenda.svg" alt="Icon 1">Agenda</button>
+            <button class="button" onclick="selectWord('Idea')"><img src="images/idea.svg" alt="Icon 1">Idea</button>
+            <button class="button" onclick="selectWord('I am fine')"><img src="images/I am fine.png" alt="Icon 1">I am fine</button>
+            <button class="button" onclick="selectWord('Target')"><img src="images/target.svg" alt="Icon 1">Target</button>
+            <button class="button" onclick="selectWord('Time')"><img src="images/time.svg" alt="Icon 1">Time</button>
+            <button class="button" onclick="selectWord('Login')"><img src="images/login.svg" alt="Icon 1">Login</button>
+            <button class="button" onclick="selectWord('Next')"><img src="images/next.svg" alt="Icon 1">Next</button>
+            <button class="button" onclick="selectWord('Plan')"><img src="images/plan.svg" alt="Icon 1">Plan</button>
+            <button class="button" onclick="selectWord('Report')"><img src="images/report.svg" alt="Icon 1">Report</button>
+            <button class="button" onclick="selectWord('Morning')"><img src="images/morning.png" alt="Icon 1">Morning</button>
+            <button class="button" onclick="selectWord('Find')"><img src="images/find.svg" alt="Icon 1">Find</button>
+            <button class="button" onclick="selectWord('Drink')"><img src="images/drink.svg" alt="Icon 1">Drink</button>
+            <button class="button" onclick="selectWord('Pen')"><img src="images/pen.png" alt="Icon 1">Pen</button>
+            <button class="button" onclick="selectWord('Meeting')"><img src="images/meeting.png" alt="Icon 1">Meeting</button>
+        </div>
+        <div>
+            <p id="selected-word">Selected Word: </p>
+            <textarea id="long-text" rows="6" placeholder="Long Text"></textarea>
+        </div>
+        <div class="action-buttons">
+            <button class="button" onclick="resetText()">Reset</button>
+            <button class="button" onclick="confirmSelection()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        function selectWord(word) {
+            var longText = document.getElementById('long-text');
+            longText.value += word + " "; // Append the selected word with a space to separate
+            document.getElementById('selected-word').innerText = "Selected Word: " + word;
+        }
+
+        function resetText() {
+            document.getElementById('selected-word').innerText = "Selected Word: ";
+            document.getElementById('long-text').value = "";
+        }
+
+        function confirmSelection() {
+            var longText = document.getElementById('long-text').value;
+            speakText(longText);
+        }
+
+        function speakText(text) {
+            var speechSynthesis = window.speechSynthesis;
+            var speechText = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(speechText);
+        }
+    </script>
+</body>
+</html>
